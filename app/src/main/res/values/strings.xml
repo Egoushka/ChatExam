@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">ChatExam</string>
+    <string name="enter_nickname">Enter nickname:</string>
+    <string name="main_btn_continue">Continue</string>
+    <string name="hint_nickname">nickname</string>
+    <string name="autofill_nickname">user</string>
+</resources>
