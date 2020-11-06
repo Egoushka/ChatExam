@@ -29,7 +29,7 @@ public class JSONParser {   // парсинг JSON ответа
             id.add( jsonArray.getJSONObject(i).getInt( "id" ) );
             author.add( jsonArray.getJSONObject(i).getString( "author" ) );
             text.add( jsonArray.getJSONObject(i).getString( "text" ) );
-            moment.add( new SimpleDateFormat( String.valueOf( R.string.data_string_format ) ).parse( jsonArray.getJSONObject(i).getString( "moment" ) ) );
+            moment.add( new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" ).parse( jsonArray.getJSONObject(i).getString( "moment" ) ) );
         }
         return new Message( id, author, text, moment );
     }
