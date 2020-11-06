@@ -34,38 +34,38 @@ public class MessageListActivity extends AppCompatActivity {
     private JSONParser jsonParser = new JSONParser();   // экземпляр класса JSONParser
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_message_list);
+    protected void onCreate( Bundle savedInstanceState ) {
+        super.onCreate( savedInstanceState );
+        setContentView( R.layout.activity_message_list );
 
         // инициализация переменной tvlog для управления объектом
-        tvlog = findViewById(R.id.tvLog);
-        tvlog.setMovementMethod(new ScrollingMovementMethod());
+        tvlog = findViewById (R.id.tvLog );
+        tvlog.setMovementMethod( new ScrollingMovementMethod() );
 
         // инициализация переменной msgLayout для управления объектом
-        msgLayout = findViewById(R.id.messageLayout);
+        msgLayout = findViewById( R.id.messageLayout );
 
         // функция получения JSON с сервера
         loadJSON = () ->{
             // получение JSON с сервера путём отправки запроса
-            try ( InputStream resource = new URL(getString(R.string.URLMessages)).openStream() ) {
+            try ( InputStream resource = new URL( getString( R.string.URLMessages ) ).openStream() ) {
                 StringBuilder response = new StringBuilder();
                 int sym;
-                while((sym=resource.read())!=-1)
-                    response.append((char) sym);
-                messagesText = new String(response.toString().getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
+                while( ( sym=resource.read() ) != -1 )
+                    response.append( (char) sym );
+                messagesText = new String( response.toString().getBytes( StandardCharsets.ISO_8859_1 ), StandardCharsets.UTF_8 );
 
                 // запуск отображения сообщений
-                runOnUiThread(showJSON);
-            } catch (Exception e) {
+                runOnUiThread( showJSON );
+            } catch ( Exception e ) {
                 logtext = e.getMessage();
-                runOnUiThread(showLog);
+                runOnUiThread( showLog );
             }
         };
 
         // вывод текста в лог
         showLog = () ->{
-            tvlog.setText(logtext);
+            tvlog.setText( logtext );
         };
 
         // отображение сообщений
@@ -73,44 +73,44 @@ public class MessageListActivity extends AppCompatActivity {
             try {
 
                 // парсинг ответа запроса
-                Message msg = jsonParser.getMessage(messagesText);
+                Message msg = jsonParser.getMessage( messagesText );
                 String txt = "";
 
                 // массив облачек сообщений
-                TextView[] msgBoxs = new TextView[msg.text.size()];
+                TextView[] msgBoxs = new TextView[ msg.text.size() ];
 
                 // хз копипаст с интернета
-                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                lp.setMargins((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 15, this.getResources().getDisplayMetrics()), (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 15, this.getResources().getDisplayMetrics()), (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 15, this.getResources().getDisplayMetrics()),(int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 15, this.getResources().getDisplayMetrics()));
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams( LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT );
+                lp.setMargins( (int) TypedValue.applyDimension( TypedValue.COMPLEX_UNIT_DIP, 15, this.getResources().getDisplayMetrics() ), (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 15, this.getResources().getDisplayMetrics() ), (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 15, this.getResources().getDisplayMetrics() ),(int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 15, this.getResources().getDisplayMetrics() ) );
 
                 // объект для форматирования даты
-                @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat(getString(R.string.data_string_format));
+                @SuppressLint( "SimpleDateFormat" ) SimpleDateFormat simpleDateFormat = new SimpleDateFormat( getString( R.string.data_string_format ) );
 
                 for(int i = 0; i< msg.text.size();++i){
                     // инициализация текстового поля
                     msgBoxs[i] = new TextView(this);
 
                     // форматирование текстового поля под единый шаблон
-                    msgBoxs[i].setPadding((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, this.getResources().getDisplayMetrics()),(int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, this.getResources().getDisplayMetrics()),(int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, this.getResources().getDisplayMetrics()),(int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, this.getResources().getDisplayMetrics()));
-                    msgBoxs[i].setLayoutParams(lp);
-                    msgBoxs[i].setWidth(msgLayout.getWidth());
-                    msgBoxs[i].setHeight((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100, this.getResources().getDisplayMetrics()));
-                    msgBoxs[i].setGravity(19); // Gravity.CENTER|Gravity.LEFT
-                    msgBoxs[i].setBackgroundColor(Color.parseColor(getString(R.string.color_message_box)));
+                    msgBoxs[i].setPadding( (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, this.getResources().getDisplayMetrics() ), (int) TypedValue.applyDimension( TypedValue.COMPLEX_UNIT_DIP, 10, this.getResources().getDisplayMetrics() ), (int) TypedValue.applyDimension( TypedValue.COMPLEX_UNIT_DIP, 10, this.getResources().getDisplayMetrics() ), (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, this.getResources().getDisplayMetrics() ) );
+                    msgBoxs[i].setLayoutParams( lp );
+                    msgBoxs[i].setWidth( msgLayout.getWidth() );
+                    msgBoxs[i].setHeight( (int) TypedValue.applyDimension( TypedValue.COMPLEX_UNIT_DIP, 100, this.getResources().getDisplayMetrics() ) );
+                    msgBoxs[i].setGravity( 19 ); // Gravity.CENTER|Gravity.LEFT
+                    msgBoxs[i].setBackgroundColor( Color.parseColor(getString(R.string.color_message_box) ) );
 
                     // добавление текста в текстовое поле
-                    msgBoxs[i].setText(String.format("%s : %s\nmoment: %s", msg.author.get(i), msg.text.get(i), simpleDateFormat.format(msg.moment.get(i))));
+                    msgBoxs[i].setText(String.format( "%s : %s\nmoment: %s", msg.author.get(i), msg.text.get(i), simpleDateFormat.format(msg.moment.get(i) ) ) );
 
                     // отображение облачка
-                    msgLayout.addView(msgBoxs[i]);
+                    msgLayout.addView( msgBoxs[i] );
                 }
             } catch (JSONException | ParseException e) {
-                ((TextView)findViewById(R.id.tvLog)).setText(e.getMessage());
+                ( (TextView) findViewById( R.id.tvLog ) ).setText(e.getMessage() );
             }
         };
 
         // старт программы при запуске
-        (new Thread(loadJSON)).start();
+        ( new Thread(loadJSON) ).start();
 
 
     }

@@ -9,7 +9,7 @@ public class Message {      // класс содержит информацию 
     public List<String>text;
     public List<Date> moment;
 
-    public Message(List<Integer> id, List<String> author, List<String> text, List<Date> moment) {
+    public Message( List<Integer> id, List<String> author, List<String> text, List<Date> moment ) {
         this.id = id;
         this.author = author;
         this.text = text;

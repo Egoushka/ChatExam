@@ -14,8 +14,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView( R.layout.activity_main );
     }
 
-    public void btnMsgListActivity(View view) {
-        Intent msgActivity = new Intent(this, MessageListActivity.class);
-        startActivity(msgActivity);
+    public void btnMsgListActivity( View view ) {
+        Intent msgActivity = new Intent( this, MessageListActivity.class );
+        startActivity( msgActivity );
     }
 }
