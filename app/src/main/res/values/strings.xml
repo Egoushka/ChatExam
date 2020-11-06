@@ -5,4 +5,6 @@
     <string name="hint_nickname">nickname</string>
     <string name="autofill_nickname">user</string>
     <string name="URLMessages">http://chat.momentfor.fun/</string>
+    <string name="color_message_box">#B0F6DD</string>
+    <string name="data_string_format">dd-MM-yyyy HH:mm:ss</string>
 </resources>

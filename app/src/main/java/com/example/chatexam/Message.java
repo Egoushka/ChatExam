@@ -3,7 +3,7 @@ package com.example.chatexam;
 import java.util.Date;
 import java.util.List;
 
-public class Message {
+public class Message {      // класс содержит информацию про массив сообщений из запроса
     public List<Integer> id;
     public List<String> author;
     public List<String>text;

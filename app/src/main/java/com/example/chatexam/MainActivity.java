@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void btnMsgListActivity(View view) {
-        Intent msgActivity = new Intent(this,MessageListActivity.class);
+        Intent msgActivity = new Intent(this, MessageListActivity.class);
         startActivity(msgActivity);
     }
 }
