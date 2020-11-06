@@ -38,6 +38,11 @@ public class MessageListActivity extends AppCompatActivity {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_message_list );
 
+        Bundle arguments = getIntent().getExtras();
+        String name = arguments.get( "user_nickname" ).toString();    // user_nickname from activity_main
+
+        setTitle( "ChatExam Username: " + name );
+
         // инициализация переменной tvlog для управления объектом
         tvlog = findViewById (R.id.tvLog );
         tvlog.setMovementMethod( new ScrollingMovementMethod() );
