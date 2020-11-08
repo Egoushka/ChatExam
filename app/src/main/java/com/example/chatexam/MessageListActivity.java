@@ -91,12 +91,14 @@ public class MessageListActivity extends AppCompatActivity {
                 // объект для форматирования даты
                 @SuppressLint( "SimpleDateFormat" ) SimpleDateFormat simpleDateFormat = new SimpleDateFormat( getString( R.string.data_string_format ) );
 
+                int n = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, this.getResources().getDisplayMetrics() );
+
                 for(int i = 0; i< msg.text.size();++i){
                     // инициализация текстового поля
                     msgBoxs[i] = new TextView(this);
 
                     // форматирование текстового поля под единый шаблон
-                    msgBoxs[i].setPadding( (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, this.getResources().getDisplayMetrics() ), (int) TypedValue.applyDimension( TypedValue.COMPLEX_UNIT_DIP, 10, this.getResources().getDisplayMetrics() ), (int) TypedValue.applyDimension( TypedValue.COMPLEX_UNIT_DIP, 10, this.getResources().getDisplayMetrics() ), (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, this.getResources().getDisplayMetrics() ) );
+                    msgBoxs[i].setPadding( n , n , n , n );
                     msgBoxs[i].setLayoutParams( lp );
                     msgBoxs[i].setWidth( msgLayout.getWidth() );
                     msgBoxs[i].setHeight( (int) TypedValue.applyDimension( TypedValue.COMPLEX_UNIT_DIP, 100, this.getResources().getDisplayMetrics() ) );
