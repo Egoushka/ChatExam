@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.util.TypedValue;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -13,6 +14,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import org.json.JSONException;
 
 import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
@@ -24,10 +27,16 @@ public class MessageListActivity extends AppCompatActivity {
     private Runnable loadJSON;      // загрузка JSON с сервера
     private Runnable showJSON;      // отображение JSON в activity_message_list.xml в виде "облачек"
     private Runnable showLog;       // отображение logtext в поле tvlog
+    private Runnable sendGet;
+    private Runnable emptyLayout;
+
     private String messagesText;    // ответ запроса
+    private String msg;
 
     private TextView tvlog;         // лог поле для ошибок
     private String logtext;         // текст лога
+
+    private String name;
 
     private LinearLayout msgLayout; // поле в котором содержаться сообщения
 
@@ -39,7 +48,7 @@ public class MessageListActivity extends AppCompatActivity {
         setContentView( R.layout.activity_message_list );
 
         Bundle arguments = getIntent().getExtras();
-        String name = arguments.get( "user_nickname" ).toString();    // user_nickname from activity_main
+        name = arguments.get( "user_nickname" ).toString();    // user_nickname from activity_main
 
         setTitle( "ChatExam Username: " + name );
 
@@ -60,6 +69,7 @@ public class MessageListActivity extends AppCompatActivity {
                     response.append( (char) sym );
                 messagesText = new String( response.toString().getBytes( StandardCharsets.ISO_8859_1 ), StandardCharsets.UTF_8 );
 
+                resource.close();
                 // запуск отображения сообщений
                 runOnUiThread( showJSON );
             } catch ( Exception e ) {
@@ -116,9 +126,39 @@ public class MessageListActivity extends AppCompatActivity {
             }
         };
 
+        sendGet = () -> {
+            try {
+                URL url = new URL("http://chat.momentfor.fun/?author=" + name + "&msg=" + msg);
+                HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+                if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                    //logtext = "ok";
+                } else {
+                    //logtext = "okn't";
+                }
+                connection.disconnect();
+                runOnUiThread(showLog);
+
+                runOnUiThread(emptyLayout);
+                ( new Thread(loadJSON) ).start();
+            } catch (Exception ex){
+                logtext = ex.getMessage();
+                runOnUiThread(showLog);
+            }
+        };
+
+        emptyLayout = () ->{
+          msgLayout.removeAllViewsInLayout();
+        };
+
         // старт программы при запуске
         ( new Thread(loadJSON) ).start();
 
 
+    }
+
+    public void btnSendMessage( View view ) throws MalformedURLException {
+        msg = ( (TextView) findViewById(R.id.editTextTextPersonName2) ).getText().toString();
+        ( new Thread(sendGet) ).start();
+        ( (TextView) findViewById(R.id.editTextTextPersonName2) ).setText("");
     }
 }
